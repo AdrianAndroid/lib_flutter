@@ -1,0 +1,24 @@
+name: card_settings_example
+description: A Flutter project that demonstrated the use of the card_settings package.
+version: 1.0.0
+publish_to: none
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  card_settings:
+    path: ../
+  font_awesome_flutter:
+  adaptive_theme: ^2.0.0
+  google_fonts: ^2.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/twilight_sparkle.png

@@ -1,0 +1,47 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+selection.json
+
+# Vuepress
+**/.vuepress/dist/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins*
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+ios/Podfile
+ios/Podfile.lock
+
+# Android releated
+*.apk
+*.aab
+
+# Web related
+lib/generated_plugin_registrant.dart
+node_modules/
+
+# Exceptions to above rules.
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+# Secret data
+**/google-services.json
+**/GoogleService-Info.plist

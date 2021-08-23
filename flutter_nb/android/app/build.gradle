@@ -1,0 +1,93 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+android {
+    compileSdkVersion 28
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.bhm.flutter.flutternb"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        //flutter在Android平台下会默认生成arm-v7架构的的so库
+        //官方注释目前flutter只支持在debug模式下生成x86的so
+        debug{
+            ndk {
+                abiFilters 'x86', 'arm64-v8a'
+            }
+        }
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.debug
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    /*环信IM集成*/
+    //use legacy for android 6.0
+    useLibrary 'org.apache.http.legacy'
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    //noinspection GradleCompatible
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+    /*环信IM集成*/
+    //Optional compile for GCM (Google Cloud Messaging).
+    implementation 'com.google.android.gms:play-services-gcm:16.0.0'
+    implementation 'com.hyphenate:hyphenate-sdk:3.3.0'
+    implementation 'com.alibaba:fastjson:1.2.55'
+    //轻触拍照，长按摄像
+    implementation 'cjt.library.wheel:camera:1.1.9'
+    //拒绝重写Activity或Fragment的onActivityResult方法
+    implementation 'com.bhm.sdk.bhmlibrary:ActivityResult:1.0.3'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+}
